@@ -1,6 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 
@@ -8,7 +9,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
   declarations: [],
   imports: [
     CommonModule,
-    SharedModule
+    SharedModule,
+    FontAwesomeModule,
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

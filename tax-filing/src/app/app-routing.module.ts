@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TaxFilingComponent } from './module/tax-filing/components/tax-filing.component';
+import { TaxFilingComponent } from './module/tax-filing/components/tax-filing/tax-filing.component';
 
 const routes: Routes = [
   {

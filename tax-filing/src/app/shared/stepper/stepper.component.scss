@@ -1,5 +1,5 @@
 @import "../../style/colors.scss";
-
+@import '~bootstrap/dist/css/bootstrap.min.css';
 .tax-stepper {
     list-style-type: none;
     padding: 0;
@@ -47,7 +47,7 @@
     border: 3px solid #b8b8b8;
     border-radius: 50%;
     text-align: center;
-    margin: 0 auto 6px;
+    margin: 0 auto 4px;
     z-index: 2;
 }
 
@@ -71,3 +71,4 @@
     margin-top: 20px;
     font-size: 20px;
 }
+
