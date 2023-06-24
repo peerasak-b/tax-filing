@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "tax-filling": {
+    "tax-filing": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/tax-filling",
+            "outputPath": "dist/tax-filing",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -65,10 +65,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "tax-filling:build:production"
+              "browserTarget": "tax-filing:build:production"
             },
             "development": {
-              "browserTarget": "tax-filling:build:development"
+              "browserTarget": "tax-filing:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -76,7 +76,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "tax-filling:build"
+            "browserTarget": "tax-filing:build"
           }
         },
         "test": {
