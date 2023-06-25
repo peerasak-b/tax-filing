@@ -10,8 +10,8 @@ import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
 export class FilingTypeComponent  implements OnInit {
   public taxFilingTypeForm: FormGroup = new FormGroup({});
   public taxFilingType = [
-    {value: "1", text: "Ordinary Filing"},
-    {value: "2", text: "Additional Filing"}
+    {code: "1", name: "Ordinary Filing"},
+    {code: "2", name: "Additional Filing"}
   ]
   public icon = faCircleQuestion;
   get formGroup() {
@@ -26,4 +26,8 @@ export class FilingTypeComponent  implements OnInit {
         taxFilingType: new FormControl("1",[Validators.required]),
     });
   }
+
+  onSelect()  {
+      console.log(this.formGroup['taxFilingType'].value);
+  } 
 }

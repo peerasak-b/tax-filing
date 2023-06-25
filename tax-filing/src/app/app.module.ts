@@ -5,15 +5,14 @@ import { AppComponent } from './app.component';
 import { TaxFilingModule } from './module/tax-filing/tax-filing.module';
 import { SharedModule } from './shared/shared.module';
 import { TaxFilingComponent } from './module/tax-filing/components/tax-filing/tax-filing.component';
-import { FilingTypeComponent } from './module/tax-filing/components/filing-type/filing-type.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FilingTypeComponent } from './module/tax-filing/components/filing-type/filing-type.component';
+import { VatMonthComponent } from './module/tax-filing/components/vat-month/vat-month.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    TaxFilingComponent,
-    FilingTypeComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,

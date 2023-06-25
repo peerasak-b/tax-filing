@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Input, OnInit, Output, Component } from '@angular/core';
 
 @Component({
   selector: 'app-tax-filing',
@@ -6,5 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./tax-filing.component.scss']
 })
 export class TaxFilingComponent {
-
+  @Input() filingType = "";
+  @Input() vatMonth = ""; 
+  @Input() vatYear = "";
 }

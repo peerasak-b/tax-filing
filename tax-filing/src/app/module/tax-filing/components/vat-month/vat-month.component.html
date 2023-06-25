@@ -1,0 +1,26 @@
+
+<div class="row">
+    <div class="col-12">
+        <h6>Vat Month <span class="text-danger">*</span></h6>
+    </div>
+</div>
+<form [formGroup]="vatMonthForm">
+    <div class="row">
+        <div class="col-3">
+            <select class="form-select col-3" id="month" formControlName="month">
+                <option value=null selected>-Please Select-</option>
+                <option *ngFor="let month of filterMonth" [ngValue]="month.code">
+                    {{month.name}}
+                </option>
+            </select>
+        </div>
+        <div class="col-3">
+            <select class="form-select" id="year" formControlName="year" (change)="onYearSelect()">
+                <option value=null selected>-Please Select-</option>
+                <option *ngFor="let year of years" [ngValue]="year.code">
+                    {{year.name}}
+                </option>
+            </select>
+        </div>
+    </div>
+</form>

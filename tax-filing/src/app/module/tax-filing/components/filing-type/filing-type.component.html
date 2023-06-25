@@ -13,14 +13,16 @@
                     <form [formGroup]="taxFilingTypeForm">
                         <div class="form-check  form-check-inline" *ngFor="let type of taxFilingType">
                             <input class="form-check-input" type="radio" formControlName="taxFilingType"
-                                id="flexRadioDefault1" value={{type.value}}>
+                                id="flexRadioDefault1" value={{type.code}} (change)="onSelect()">
                             <label class="form-check-label" for="flexRadioDefault1">
-                                {{type.text}}  <fa-icon [icon]="icon" title="{{type.text}}"></fa-icon>
+                                {{type.name}}  <fa-icon [icon]="icon" title="{{type.name}}"></fa-icon>
                             </label>
                         </div>
                     </form>
                 </div>
             </div>
+            <br />
+            <app-vat-month></app-vat-month>
         </div>
     </div>
 </div>
