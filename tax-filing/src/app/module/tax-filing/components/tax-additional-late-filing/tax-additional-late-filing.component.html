@@ -1,0 +1,35 @@
+<br />
+<div class="row">
+    <div class="col-12">
+        <span>In case of late filong and payment, or additional filing</span>
+    </div>
+</div>
+<br />
+<form [formGroup]="taxAdditionalForm">
+    <div class="row">
+        <div class="col-9">
+            <label>3. Surcharge <fa-icon [icon]="icon" title=""></fa-icon></label>
+        </div>
+        <div class="col-3">
+            <input type="text" class="form-control input-number" formControlName="surcharge" [ngModel]="taxAmount | number:'1.2-2'">
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-9">
+            <label>4. Penalty <fa-icon [icon]="icon" title=""></fa-icon></label>
+        </div>
+        <div class="col-3">
+            <input type="text" class="form-control input-number" formControlName="penalty" [ngModel]="penalty | number:'1.2-2'">
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-9">
+            5. Total amount of VAT, surcharge, and penalty to be remitted (2.+3.+4.)
+        </div>
+        <div class="col-3">
+            <input type="text" class="form-control input-number" formControlName="totalVat" [ngModel]="totalVat | number:'1.2-2'">
+        </div>
+    </div>
+</form>

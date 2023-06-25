@@ -7,6 +7,7 @@ import { FilingTypeComponent } from './components/filing-type/filing-type.compon
 import { ReactiveFormsModule } from '@angular/forms';
 import { TaxFilingComponent } from './components/tax-filing/tax-filing.component';
 import { TaxComputationComponent } from './components/tax-computation/tax-computation.component';
+import { TaxAdditionalLateFilingComponent } from './components/tax-additional-late-filing/tax-additional-late-filing.component';
 
 
 
@@ -15,7 +16,8 @@ import { TaxComputationComponent } from './components/tax-computation/tax-comput
     FilingTypeComponent,
     VatMonthComponent,
     TaxFilingComponent,
-    TaxComputationComponent
+    TaxComputationComponent,
+    TaxAdditionalLateFilingComponent
   ],
   imports: [
     CommonModule,

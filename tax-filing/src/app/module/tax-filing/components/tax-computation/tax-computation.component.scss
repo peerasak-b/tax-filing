@@ -1,0 +1,45 @@
+.tax-under-header {
+    font-size: 24px;
+    font-weight: bold;
+}
+input {
+    background: "text" no-repeat;
+    background-position: calc(100% - 0.75rem) center !important;
+    -moz-appearance:none !important;
+    -webkit-appearance: none !important; 
+    appearance: none !important;
+    padding-right: 2rem !important;
+}
+.btn-exchange-rate {
+    border: none;
+    background: none;
+}
+
+.tax-under {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.input-number{
+    text-align: right;
+}
+
+.currency-input {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: max-content;
+    padding: 0.5rem 0;
+    margin-top: 0.5rem;
+  
+    & span {
+      margin: 0 1rem;
+    }
+  
+    & input {
+      border: none;
+  
+      &:focus {
+        outline: none;
+      }
+    }
+}

@@ -1,10 +1,36 @@
 <br />
 <div class="row">
     <div class="col-9">
-        <h3>2. Tax Computation</h3>
+        <span class="tax-under-header">2. Tax Computation</span>
     </div>
     <div class="col-3">
-        <span>View Exchange Rate</span>
+        <button class="btn-exchange-rate"><u class="tax-under-header">View Exchange Rate</u></button>
     </div>
 </div>
 <hr>
+<form [formGroup]="taxForm">
+    <div class="row">
+        <div class="col-12">
+            <span class="tax-under">Provide total value taxable electronic service <span class="text-danger">*</span></span>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-9">
+            1. Total value of taxable electronic service exclusive of VAT
+        </div>
+        <div class="col-3">
+            <input type="text" class="form-control input-number" formControlName="saleAmount" (change)="onChangeValue()" [ngModel]="saleAmount | number:'1.2-2'">
+        </div>
+    </div>
+<br>
+    <div class="row">
+        <div class="col-9">
+            2. Total VAT to be remitted (7% of 1.)
+        </div>
+        <div class="col-3">
+            <input type="text" class="form-control input-number" formControlName="taxAmount" [ngModel]="taxAmount | number:'1.2-2'">
+        </div>
+    </div>
+</form>
+<app-tax-additional-late-filing *ngIf="isAdditionalFiling()" [saleAmount]="saleAmount" [taxAmount]="taxAmount" ></app-tax-additional-late-filing>

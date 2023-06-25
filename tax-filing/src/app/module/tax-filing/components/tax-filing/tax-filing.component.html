@@ -4,9 +4,20 @@
 <div class="container">
     <div class="card">
         <div class="card-body">
-            <app-filing-type></app-filing-type>
-            <app-vat-month></app-vat-month>
-            <app-tax-computation></app-tax-computation>
+            <app-filing-type (filingTypeEvent)="setFilingType($event)"></app-filing-type>
+            <app-vat-month [filingType]="filingType"></app-vat-month>
+            <app-tax-computation [filingType]="filingType"></app-tax-computation>
         </div>
     </div>
 </div>
+<br>
+<footer>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <button class="tax-back-button">Back</button>
+            <button class="tax-submit-button">Next</button>
+        </div>
+    </div>
+</div>
+</footer>
