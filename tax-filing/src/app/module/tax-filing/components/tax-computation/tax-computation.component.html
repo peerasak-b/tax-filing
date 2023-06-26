@@ -20,7 +20,14 @@
             1. Total value of taxable electronic service exclusive of VAT
         </div>
         <div class="col-3">
-            <input type="text" class="form-control input-number" formControlName="saleAmount" (change)="onChangeValue()" [ngModel]="saleAmount | number:'1.2-2'">
+            <input type="text" 
+            #myInput
+            class="form-control input-number" 
+            formControlName="saleAmount" 
+            (input)="onInputValue($event)" 
+            (change)="onChangeValue()" 
+            (click)="onClick($event)"
+            [ngModel]="saleAmount | number:'1.2-2'">
         </div>
     </div>
 <br>

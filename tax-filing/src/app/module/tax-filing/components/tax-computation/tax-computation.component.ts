@@ -53,19 +53,27 @@ export class TaxComputationComponent implements OnInit {
 
   onChangeValue() {
     let excludeVat = 0;
-    const pattern = new RegExp('^[0-9]*$')
-    if (pattern.test(this.formGroup['saleAmount'].value)) {
-      excludeVat = this.formGroup['saleAmount'].value * 0.07;
-      this.formGroup['taxAmount'].setValue(excludeVat.toFixed(2));
-      this.saleAmount = this.formGroup['saleAmount'].value;
-      this.taxAmount = excludeVat;
-    } else {
-      this.formGroup['saleAmount'].setValue(0);
-      this.formGroup['taxAmount'].setValue(0);
-      this.saleAmount = 0;
-      this.taxAmount = 0;
+    excludeVat = this.formGroup['saleAmount'].value * 0.07;
+    this.formGroup['taxAmount'].setValue(excludeVat.toFixed(2));
+    this.saleAmount = this.formGroup['saleAmount'].value;
+    this.taxAmount = excludeVat;
+  }
+
+  onInputValue(event: any) {
+    const value = this.filterNonNumeric(event.target.value);
+    event.target.value = value;
+  }
+
+  onClick(event: any) {
+    if (event.target.value == 0) {
+      event.target.value = '';
     }
   }
+
+  filterNonNumeric(value: string): string {
+    return value.replace(/[^0-9]/g, '');
+  }
+
 
   emitComputation(value: string) {
     this.taxComputationEvent.emit(value);
