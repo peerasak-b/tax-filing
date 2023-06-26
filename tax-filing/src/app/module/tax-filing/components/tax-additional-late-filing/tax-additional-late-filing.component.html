@@ -11,6 +11,7 @@
             <label>3. Surcharge <fa-icon [icon]="icon" title=""></fa-icon></label>
         </div>
         <div class="col-3">
+            <span class="currency-position"> THB</span>
             <input type="text" class="form-control input-number" formControlName="surcharge" [ngModel]="taxAmount | number:'1.2-2'">
         </div>
     </div>
@@ -20,6 +21,7 @@
             <label>4. Penalty <fa-icon [icon]="icon" title=""></fa-icon></label>
         </div>
         <div class="col-3">
+            <span class="currency-position"> THB</span>
             <input type="text" class="form-control input-number" formControlName="penalty" [ngModel]="penalty | number:'1.2-2'">
         </div>
     </div>
@@ -29,6 +31,7 @@
             5. Total amount of VAT, surcharge, and penalty to be remitted (2.+3.+4.)
         </div>
         <div class="col-3">
+            <span class="currency-position"> THB</span>
             <input type="text" class="form-control input-number" formControlName="totalVat" [ngModel]="totalVat | number:'1.2-2'">
         </div>
     </div>
