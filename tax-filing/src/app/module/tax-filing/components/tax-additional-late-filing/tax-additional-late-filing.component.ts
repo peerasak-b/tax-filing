@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
+import { TaxAddLateDocument } from '../../models/tax-filing.model';
 @Component({
   selector: 'app-tax-additional-late-filing',
   templateUrl: './tax-additional-late-filing.component.html',
@@ -9,11 +10,13 @@ import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
 export class TaxAdditionalLateFilingComponent implements OnInit{
   @Input() saleAmount = 0;
   @Input() taxAmount = 0;
+  @Output() taxAddLateFilingEvent = new EventEmitter<TaxAddLateDocument>();
   public taxAdditionalForm: FormGroup = new FormGroup({});
   public icon = faCircleQuestion;
   public surcharge = 0;
   public penalty = 200;
   public totalVat = 0;
+  public taxAddLateDocument?: TaxAddLateDocument;
 
 
   get formGroup() {
@@ -54,5 +57,16 @@ export class TaxAdditionalLateFilingComponent implements OnInit{
     this.formGroup['totalVat'].setValue(totalVat.toFixed(2));
     this.surcharge = surcharge;
     this.totalVat = totalVat;
+    this.emitTaxAddLateFiling();
+
+  }
+
+  emitTaxAddLateFiling() {
+    this.taxAddLateDocument = new TaxAddLateDocument({
+      surcharge: this.surcharge,
+      penalty: this.penalty,
+      totalVat: this.totalVat
+    });
+    this.taxAddLateFilingEvent.emit(this.taxAddLateDocument);
   }
 }

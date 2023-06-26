@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { formatNumber, registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/th';
 import { TaxAdditionalLateFilingComponent } from '../tax-additional-late-filing/tax-additional-late-filing.component';
+import { Standard, TaxAddLateDocument, TaxComputationDocument } from '../../models/tax-filing.model';
 registerLocaleData(localeFr, 'th');
 
 @Component({
@@ -11,20 +12,26 @@ registerLocaleData(localeFr, 'th');
   styleUrls: ['./tax-computation.component.scss']
 })
 export class TaxComputationComponent implements OnInit {
-  @Input() filingType = '';
-  @Output() taxComputationEvent = new EventEmitter<string>();
+  @Input() filingType?: Standard;
+  @Output() taxComputationEvent = new EventEmitter<TaxComputationDocument>();
+  @ViewChild(TaxAdditionalLateFilingComponent) taxAddLateFilingComponent: TaxAdditionalLateFilingComponent = new TaxAdditionalLateFilingComponent();
   public valueDisplay = 0.00;
   public taxForm: FormGroup = new FormGroup({});
   public saleAmount = 0;
   public taxAmount = 0;
+  public taxAddLate?: TaxAddLateDocument;
+  public taxComputation?: TaxComputationDocument;
   get formGroup() {
     return this.taxForm.controls;
-  }
+  } 
 
   ngOnInit(): void {
     this.createTaxFilingForm();
   }
 
+  ngOnChanges(): void {
+  }
+  
   createTaxFilingForm() {
       this.taxForm = new FormGroup({
         saleAmount: new FormControl(0,[Validators.required, Validators.pattern("^[0-9]*$")]),
@@ -33,7 +40,7 @@ export class TaxComputationComponent implements OnInit {
   }
 
   isAdditionalFiling(): boolean {
-    return this.filingType == '2';
+    return this.filingType?.code == '2';
   }
 
   validForm() {
@@ -57,6 +64,7 @@ export class TaxComputationComponent implements OnInit {
     this.formGroup['taxAmount'].setValue(excludeVat.toFixed(2));
     this.saleAmount = this.formGroup['saleAmount'].value;
     this.taxAmount = excludeVat;
+    this.emitComputation();
   }
 
   onInputValue(event: any) {
@@ -74,9 +82,27 @@ export class TaxComputationComponent implements OnInit {
     return value.replace(/[^0-9]/g, '');
   }
 
+  prepareDataEmitToDocument(taxAddLate: TaxAddLateDocument) {
+    this.taxAddLate =  new TaxAddLateDocument({
+      surcharge: taxAddLate.surcharge,
+      penalty: taxAddLate.penalty,
+      totalVat: taxAddLate.totalVat
+    });
 
-  emitComputation(value: string) {
-    this.taxComputationEvent.emit(value);
+  }
+
+  emitComputation() {
+    this.taxComputation = new TaxComputationDocument({
+      saleAmount:  this.saleAmount,
+      taxAmount: this.taxAmount,
+      taxAddLateAmount: this.taxAddLate === undefined ? new TaxAddLateDocument({
+        surcharge: 0,
+        penalty: 0,
+        totalVat: 0
+      }) : this.taxAddLate
+    });
+    console.log(this.taxComputation);
+    this.taxComputationEvent.emit(this.taxComputation);
   }
 }
 

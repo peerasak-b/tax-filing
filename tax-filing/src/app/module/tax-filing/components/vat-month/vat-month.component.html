@@ -10,7 +10,7 @@
 <form [formGroup]="vatMonthForm">
     <div class="row">
         <div class="col-3">
-            <select class="form-select" id="month" formControlName="month">
+            <select class="form-select" id="month" formControlName="month" (change)="onMonthChange()">
                 <option value=null selected>-Please Select-</option>
                 <option *ngFor="let month of filterMonth" [ngValue]="month.code">
                     {{month.name}}
@@ -18,7 +18,7 @@
             </select>
         </div>
         <div class="col-3">
-            <select class="form-select" id="year" formControlName="year" (change)="onYearSelect()">
+            <select class="form-select" id="year" formControlName="year" (change)="onYearChange()">
                 <option value=null selected>-Please Select-</option>
                 <option *ngFor="let year of years" [ngValue]="year.code">
                     {{year.name}}
@@ -26,7 +26,7 @@
             </select>
         </div>
         <div class="col-3" *ngIf="isAdditionalFiling()">
-            <select class="form-select" id="type" formControlName="type">
+            <select class="form-select" id="type" formControlName="type" (change)="onTypeChange()">
                 <option value=null selected>-Please Select-</option>
                 <option *ngFor="let type of types" [ngValue]="type.code">
                     {{type.name}}

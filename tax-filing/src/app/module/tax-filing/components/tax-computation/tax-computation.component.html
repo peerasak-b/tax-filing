@@ -48,4 +48,4 @@
         </div>
     </div>
 </form>
-<app-tax-additional-late-filing *ngIf="isAdditionalFiling()" [saleAmount]="saleAmount" [taxAmount]="taxAmount" ></app-tax-additional-late-filing>
+<app-tax-additional-late-filing *ngIf="isAdditionalFiling()" [saleAmount]="saleAmount" [taxAmount]="taxAmount" (taxAddLateFilingEvent)="prepareDataEmitToDocument($event)"></app-tax-additional-late-filing>

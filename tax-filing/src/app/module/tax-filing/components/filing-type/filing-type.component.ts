@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
+import { Standard } from '../../models/tax-filing.model';
 
 @Component({
   selector: 'app-filing-type',
@@ -8,7 +9,7 @@ import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./filing-type.component.scss']
 })
 export class FilingTypeComponent  implements OnInit {
-  @Output() filingTypeEvent = new EventEmitter<string>();
+  @Output() filingTypeEvent = new EventEmitter<Standard>();
   public taxFilingTypeForm: FormGroup = new FormGroup({});
   public taxFilingType = [
     {code: '1', name: 'Ordinary Filing'},
@@ -29,10 +30,14 @@ export class FilingTypeComponent  implements OnInit {
   }
 
   onSelect()  {
-      this.emitFilingType(this.formGroup['taxFilingType'].value)
+    const taxType = new Standard({
+      code: this.formGroup['taxFilingType'].value,
+      name: this.taxFilingType.find(c => c.code === this.formGroup['taxFilingType'].value)?.name
+    })
+    this.emitFilingType(taxType)
   } 
 
-  emitFilingType(value: string) {
+  emitFilingType(value: Standard) {
     this.filingTypeEvent.emit(value);
   }
 }

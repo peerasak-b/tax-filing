@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import { Standard, VatMonthYearDocument } from '../../models/tax-filing.model';
 
 @Component({
   selector: 'app-vat-month',
@@ -9,9 +10,14 @@ import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 })
 
 export class VatMonthComponent implements OnInit {
-  @Input() filingType = '';
+  @Input() filingType?: Standard;
+  @Output() vatMonthEvent  = new EventEmitter<VatMonthYearDocument>();
   public vatMonthForm: FormGroup = new FormGroup({});
+  public vatMonth = "";
+  public vatYear = "";
+  public type = "";
   public icon = faCaretDown;
+  public vatMonthDocument?: VatMonthYearDocument;
   public months = [
     { code : '01', name : 'January'},
     { code : '02', name : 'February'},
@@ -51,7 +57,7 @@ export class VatMonthComponent implements OnInit {
     });
   }
 
-  onYearSelect() {
+  onYearChange() {
     console.log(this.filingType);
     if (this.formGroup['month'].value) {
       this.formGroup['month'].setValue(null);
@@ -62,12 +68,58 @@ export class VatMonthComponent implements OnInit {
     } else {
       this.filterMonth = this.months;
     }
-    
+    this.vatYear = this.formGroup['year'].value;
+    if (this.isCheckedValue()) {
+        this.emitVatMonth();
+    }
+  }
+
+  onMonthChange() {
+    this.vatMonth = this.formGroup['month'].value;
+    if (this.isCheckedValue()) {
+      this.emitVatMonth();
+    }
+  }
+
+  onTypeChange() {
+    this.type = this.formGroup['type'].value;
+    if (this.isCheckedValue()) {
+      this.emitVatMonth();
+    }
   }
 
   isAdditionalFiling(): boolean {
-    return this.filingType == '2';
+    return this.filingType?.code == '2';
+  }
+  
+  emitVatMonth() {
+    this.vatMonthDocument = new VatMonthYearDocument({
+      vatMonth: new Standard({
+        code: this.vatMonth,
+        name: this.months.find(c => c.code == this.vatMonth)?.name,
+      }),
+      vatYear: new Standard({
+        code: this.vatYear,
+        name: this.years.find(c => c.code == this.vatYear)?.name,
+      }),
+      type: new Standard({
+        code: this.type,
+        name: this.types.find(c => c.code == this.type)?.name,
+      }),
+    });
+    this.vatMonthEvent.emit(this.vatMonthDocument);
+
   }
 
+  isCheckedValue(): boolean {
+    let checked = true;
+    if (!this.formGroup['month'].value && !this.formGroup['year'].value) {
+        checked = false;
+    }
+    if (this.filingType?.code === '2' && !this.formGroup['type'].value)  {
+        checked = false;
+    }
+    return checked;
+  }
 
 }
