@@ -1,11 +1,11 @@
 <span class="tax-under-header">1. Tax Filing Detail</span>
 <hr>
-<div class="row">
+<div class="row" *ngIf="status === 'create'">
     <div class="col-12">
         <label>Type of filing <span class="text-danger">*</span></label>
     </div>
 </div>
-<div class="row">
+<div class="row" *ngIf="status === 'create'">
     <div class="col-12">
         <form [formGroup]="taxFilingTypeForm">
             <div class="form-check  form-check-inline" *ngFor="let type of taxFilingType">
@@ -16,6 +16,14 @@
                 </label>
             </div>
         </form>
+    </div>
+</div>
+<div class="row" *ngIf="status === 'confirm'">
+    <div class="col-2">
+        <label>Type of Filing</label>
+    </div>
+    <div class="col-2">
+        <span>{{taxDataDocument?.filingType?.name}}</span>
     </div>
 </div>
 <br />

@@ -22,8 +22,8 @@ export class TaxFilingDocument {
 }
 
 export class TaxComputationDocument {
-    public saleAmount: Number;
-    public taxAmount: Number;
+    public saleAmount?: Number;
+    public taxAmount?: Number;
     public taxAddLateAmount: TaxAddLateDocument;
     public constructor(data: TaxComputationDocument) {
         this.saleAmount = data.saleAmount || 0;

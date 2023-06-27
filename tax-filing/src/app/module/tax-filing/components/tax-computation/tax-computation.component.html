@@ -20,7 +20,6 @@
             1. Total value of taxable electronic service exclusive of VAT
         </div>
             <div class="col-3">
-                <span class="currency-position"> THB</span>
                 <input type="text" 
                 #myInput
                 class="form-control input-number" 
@@ -28,7 +27,9 @@
                 (input)="onInputValue($event)" 
                 (change)="onChangeValue()" 
                 (click)="onClick($event)"
-                [ngModel]="saleAmount | number:'1.2-2'">
+                [ngModel]="saleAmount | number:'1.2-2'"
+                [ngClass]="{'field-invalid': formGroup['saleAmount'].errors?.['required']}">
+                <span class="currency-position"> THB</span>
             </div>
     </div>
 <br>
@@ -37,14 +38,15 @@
             2. Total VAT to be remitted (7% of 1.)
         </div>
         <div class="col-3">
-            <span class="currency-position"> THB</span>
             <input type="text" 
             class="form-control input-number" 
             formControlName="taxAmount"
             (input)="onInputValue($event)" 
             (change)="onChangeValue()" 
             (click)="onClick($event)"
-            [ngModel]="taxAmount | number:'1.2-2'">
+            [ngModel]="taxAmount | number:'1.2-2'"
+            [ngClass]="{'field-invalid': formGroup['taxAmount'].errors?.['required']}">
+            <span class="currency-position"> THB</span>
         </div>
     </div>
 </form>

@@ -1,5 +1,5 @@
 
-<div class="row">
+<div class="row" *ngIf="status === 'create'">
     <div class="col-6">
         <label>Vat Month <span class="text-danger">*</span></label>
     </div>
@@ -7,10 +7,13 @@
         <label>Type <span class="text-danger">*</span></label>
     </div>
 </div>
-<form [formGroup]="vatMonthForm">
+<form [formGroup]="vatMonthForm" *ngIf="status === 'create'">
     <div class="row">
         <div class="col-3">
-            <select class="form-select" id="month" formControlName="month" (change)="onMonthChange()">
+            <select class="form-select" id="month" 
+                    formControlName="month" 
+                    (change)="onMonthChange()" 
+                    [ngClass]="{'field-invalid': formGroup['month'].errors && formGroup['month'].touched}">
                 <option value=null selected>-Please Select-</option>
                 <option *ngFor="let month of filterMonth" [ngValue]="month.code">
                     {{month.name}}
@@ -18,7 +21,11 @@
             </select>
         </div>
         <div class="col-3">
-            <select class="form-select" id="year" formControlName="year" (change)="onYearChange()">
+            <select class="form-select" 
+                    id="year" 
+                    formControlName="year" 
+                    (change)="onYearChange()"
+                    [ngClass]="{'field-invalid': formGroup['year'].errors?.['required'] && formGroup['year'].touched}">
                 <option value=null selected>-Please Select-</option>
                 <option *ngFor="let year of years" [ngValue]="year.code">
                     {{year.name}}
@@ -26,7 +33,8 @@
             </select>
         </div>
         <div class="col-3" *ngIf="isAdditionalFiling()">
-            <select class="form-select" id="type" formControlName="type" (change)="onTypeChange()">
+            <select class="form-select" id="type" formControlName="type" (change)="onTypeChange()"
+            [ngClass]="{'field-invalid': formGroup['type'].errors?.['required'] && formGroup['type'].touched}">
                 <option value=null selected>-Please Select-</option>
                 <option *ngFor="let type of types" [ngValue]="type.code">
                     {{type.name}}
@@ -35,3 +43,12 @@
         </div>
     </div>
 </form>
+
+<div class="row" *ngIf="status === 'confirm'">
+    <div class="col-2">
+        <label>Vat Month</label>
+    </div>
+    <div class="col-2">
+        <span>{{taxDataDocument?.vatMonth?.name}} {{taxDataDocument?.vatYear?.name}}</span>
+    </div>
+</div>

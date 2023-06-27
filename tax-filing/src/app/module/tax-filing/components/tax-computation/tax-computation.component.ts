@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { formatNumber, registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/th';
@@ -13,6 +13,7 @@ registerLocaleData(localeFr, 'th');
 })
 export class TaxComputationComponent implements OnInit {
   @Input() filingType?: Standard;
+  @Input() status= "create";
   @Output() taxComputationEvent = new EventEmitter<TaxComputationDocument>();
   @ViewChild(TaxAdditionalLateFilingComponent) taxAddLateFilingComponent: TaxAdditionalLateFilingComponent = new TaxAdditionalLateFilingComponent();
   public valueDisplay = 0.00;
@@ -25,11 +26,22 @@ export class TaxComputationComponent implements OnInit {
     return this.taxForm.controls;
   } 
 
+  constructor(private cdRef: ChangeDetectorRef) {}
   ngOnInit(): void {
     this.createTaxFilingForm();
+    if (this.filingType) {
+      this.filingType.code == '1';
+    }
   }
 
   ngOnChanges(): void {
+  }
+
+  ngAfterContentChecked() {
+    if (this.filingType) {
+      this.filingType.code == '1';
+    }
+    this.cdRef.detectChanges();
   }
   
   createTaxFilingForm() {
@@ -101,7 +113,6 @@ export class TaxComputationComponent implements OnInit {
         totalVat: 0
       }) : this.taxAddLate
     });
-    console.log(this.taxComputation);
     this.taxComputationEvent.emit(this.taxComputation);
   }
 }

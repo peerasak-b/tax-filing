@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
-import { Standard, VatMonthYearDocument } from '../../models/tax-filing.model';
+import { Standard, TaxFilingDocument, VatMonthYearDocument } from '../../models/tax-filing.model';
 
 @Component({
   selector: 'app-vat-month',
@@ -11,6 +11,8 @@ import { Standard, VatMonthYearDocument } from '../../models/tax-filing.model';
 
 export class VatMonthComponent implements OnInit {
   @Input() filingType?: Standard;
+  @Input() status= '';
+  @Input() taxData?: TaxFilingDocument;
   @Output() vatMonthEvent  = new EventEmitter<VatMonthYearDocument>();
   public vatMonthForm: FormGroup = new FormGroup({});
   public vatMonth = "";
@@ -18,6 +20,7 @@ export class VatMonthComponent implements OnInit {
   public type = "";
   public icon = faCaretDown;
   public vatMonthDocument?: VatMonthYearDocument;
+  public taxDataDocument?: TaxFilingDocument;
   public months = [
     { code : '01', name : 'January'},
     { code : '02', name : 'February'},
@@ -42,13 +45,20 @@ export class VatMonthComponent implements OnInit {
     { code : '1', name : 'One-Time'},
   ];
   filterMonth = this.months; 
+
   get formGroup() {
-    return this.vatMonthForm.controls;
-}
+      return this.vatMonthForm.controls;
+  }
   ngOnInit(): void {
     this.createVatMonthForm();
   }
 
+  ngOnChanges(): void{
+    console.log(this.taxData);
+    if(this.status == 'confirm') {
+      this.setTaxDataToDocument();
+    }
+  }
   createVatMonthForm() {
       this.vatMonthForm = new FormGroup({
         month: new FormControl(null,[Validators.required]),
@@ -58,7 +68,6 @@ export class VatMonthComponent implements OnInit {
   }
 
   onYearChange() {
-    console.log(this.filingType);
     if (this.formGroup['month'].value) {
       this.formGroup['month'].setValue(null);
     }
@@ -80,6 +89,32 @@ export class VatMonthComponent implements OnInit {
       this.emitVatMonth();
     }
   }
+
+  public setValidation(formControlsNames: string[]) {
+    if (this.isAdditionalFiling()) {
+      this.formGroup['type'].addValidators([Validators.required]);
+      this.formGroup['type'].updateValueAndValidity();
+    } else {
+      this.formGroup['type'].addValidators([]);
+      this.formGroup['type'].updateValueAndValidity();
+    }
+    formControlsNames.forEach((name: string) => {
+        this.vatMonthForm.controls[name].markAsTouched();
+        this.vatMonthForm.controls[name].updateValueAndValidity();
+    });
+}
+
+/**
+ * @description validate field
+ */
+public validVatMothForm() {
+    this.setValidation([
+        'month',
+        'year',
+        'type',
+    ]);
+    return this.vatMonthForm.valid;
+}
 
   onTypeChange() {
     this.type = this.formGroup['type'].value;
@@ -122,4 +157,16 @@ export class VatMonthComponent implements OnInit {
     return checked;
   }
 
+  setTaxDataToDocument() {
+    this.taxDataDocument = new TaxFilingDocument({
+      vatMonth: new Standard({
+        code: this.taxData?.vatMonth?.code,
+        name: this.taxData?.vatMonth?.name
+      }),
+      vatYear: new Standard({
+        code: this.taxData?.vatYear?.code,
+        name: this.taxData?.vatYear?.name
+      }),
+    })
+  }
 }
