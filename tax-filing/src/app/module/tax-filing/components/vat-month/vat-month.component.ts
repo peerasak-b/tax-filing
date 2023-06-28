@@ -54,7 +54,6 @@ export class VatMonthComponent implements OnInit {
   }
 
   ngOnChanges(): void{
-    console.log(this.taxData);
     if(this.status == 'confirm') {
       this.setTaxDataToDocument();
     }
@@ -158,15 +157,32 @@ public validVatMothForm() {
   }
 
   setTaxDataToDocument() {
-    this.taxDataDocument = new TaxFilingDocument({
-      vatMonth: new Standard({
-        code: this.taxData?.vatMonth?.code,
-        name: this.taxData?.vatMonth?.name
-      }),
-      vatYear: new Standard({
-        code: this.taxData?.vatYear?.code,
-        name: this.taxData?.vatYear?.name
-      }),
-    })
+    if (this.filingType?.code === '1') {
+      this.taxDataDocument = new TaxFilingDocument({
+        vatMonth: new Standard({
+          code: this.taxData?.vatMonth?.code,
+          name: this.taxData?.vatMonth?.name
+        }),
+        vatYear: new Standard({
+          code: this.taxData?.vatYear?.code,
+          name: this.taxData?.vatYear?.name
+        })
+      });
+    } else {
+      this.taxDataDocument = new TaxFilingDocument({
+        vatMonth: new Standard({
+          code: this.taxData?.vatMonth?.code,
+          name: this.taxData?.vatMonth?.name
+        }),
+        vatYear: new Standard({
+          code: this.taxData?.vatYear?.code,
+          name: this.taxData?.vatYear?.name
+        }),
+        type: new Standard({
+          code: this.taxData?.type?.code,
+          name: this.taxData?.type?.name,
+        })
+      });
+    }
   }
 }

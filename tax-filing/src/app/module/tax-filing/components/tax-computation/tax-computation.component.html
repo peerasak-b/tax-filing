@@ -1,7 +1,8 @@
 <br />
 <div class="row">
     <div class="col-9">
-        <span class="tax-under-header">2. Tax Computation</span>
+        <span class="tax-under-header"  *ngIf="status === 'create'">2. Tax Computation</span>
+        <span class="tax-under-header"  *ngIf="status === 'confirm'">Tax Computation</span>
     </div>
     <div class="col-3">
         <button class="btn-exchange-rate"><u class="tax-under-header">View Exchange Rate</u></button>
@@ -16,10 +17,13 @@
     </div>
     <br>
     <div class="row">
-        <div class="col-9">
-            1. Total value of taxable electronic service exclusive of VAT
+        <div class="col-9"  *ngIf="status === 'create'">
+            <span>1. Total value of taxable electronic service exclusive of VAT</span>
         </div>
-            <div class="col-3">
+        <div class="col-7"  *ngIf="status === 'confirm'">
+            <span class="label-confirm">Total value of taxable electronic service exclusive of VAT</span>
+        </div>
+            <div class="col-3"  *ngIf="status === 'create'">
                 <input type="text" 
                 #myInput
                 class="form-control input-number" 
@@ -31,13 +35,22 @@
                 [ngClass]="{'field-invalid': formGroup['saleAmount'].errors?.['required']}">
                 <span class="currency-position"> THB</span>
             </div>
+            <div class="col-3   text-currency" *ngIf="status === 'confirm'">
+                <span>{{taxDataDocument?.saleAmount?.toString()  | number:'1.2-2'}}</span>
+            </div>
+            <div class="col-2"  *ngIf="status === 'confirm'">
+                <span class="label-confirm total-confirm"> THB</span>
+            </div>
     </div>
 <br>
     <div class="row">
-        <div class="col-9">
-            2. Total VAT to be remitted (7% of 1.)
+        <div class="col-9"  *ngIf="status === 'create'">
+            <span>2. Total VAT to be remitted (7% of 1.)</span>
         </div>
-        <div class="col-3">
+        <div class="col-7"  *ngIf="status === 'confirm'">
+            <span class="label-confirm">Total VAT to be remitted </span>
+        </div>
+        <div class="col-3"  *ngIf="status === 'create'">
             <input type="text" 
             class="form-control input-number" 
             formControlName="taxAmount"
@@ -48,6 +61,36 @@
             [ngClass]="{'field-invalid': formGroup['taxAmount'].errors?.['required']}">
             <span class="currency-position"> THB</span>
         </div>
+        <div class="col-3   text-currency" *ngIf="status === 'confirm'">
+            <span>{{taxDataDocument?.taxAmount?.toString()  | number:'1.2-2'}}</span>
+        </div>
+        <div class="col-2"  *ngIf="status === 'confirm'">
+            <span class="label-confirm total-confirm"> THB</span>
+        </div>
     </div>
 </form>
-<app-tax-additional-late-filing *ngIf="isAdditionalFiling()" [saleAmount]="saleAmount" [taxAmount]="taxAmount" (taxAddLateFilingEvent)="prepareDataEmitToDocument($event)"></app-tax-additional-late-filing>
+<div class="row" *ngIf="status === 'confirm'">
+    <div class="col-9">
+        <span>(7% of Total value of taxable electronic service exclusive of VAT) </span>
+    </div>
+</div>
+<br />
+<app-tax-additional-late-filing *ngIf="isAdditionalFiling()" 
+                                [status]="status" 
+                                [filingType]="filingType" 
+                                [taxData]="taxData"
+                                [saleAmount]="saleAmount" 
+                                [taxAmount]="taxAmount" 
+                                (taxAddLateFilingEvent)="prepareDataEmitToDocument($event)"></app-tax-additional-late-filing>
+<br />
+<div class="row" *ngIf="status === 'confirm'">
+    <div class="col-7">
+        <span class="label-confirm">Total Amount Payable</span>
+    </div>
+    <div class="col-3  text-currency">
+        <span class="label-confirm total-confirm">{{ filingType?.code === '1' ? (taxDataDocument?.taxAmount?.toString() | number:'1.2-2') : (taxDataDocument?.totalVat?.toString()  | number:'1.2-2')}}</span>
+    </div>
+    <div class="col-2">
+        <span class="label-confirm total-confirm"> THB</span>
+    </div>
+</div>

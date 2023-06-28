@@ -14,7 +14,19 @@ input {
 
 .currency-position {
     position: relative;
-    top: 50%;
-    left: 85%;
+    top: -50%;
+    left: 84%;
     font-weight: bold;
-  }
+}
+
+.text-currency {
+    text-align: right;
+}
+
+.label-confirm {
+    font-weight: bold;
+}
+
+.total-confirm {
+    font-size: 24px;
+}

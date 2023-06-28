@@ -3,6 +3,8 @@ import { FilingTypeComponent } from '../filing-type/filing-type.component';
 import { VatMonthComponent } from '../vat-month/vat-month.component';
 import { Standard, TaxAddLateDocument, TaxComputationDocument, TaxFilingDocument, VatMonthYearDocument } from '../../models/tax-filing.model';
 import { TaxComputationComponent } from '../tax-computation/tax-computation.component';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { PopupComponent } from 'src/app/shared/popup/popup.component';
 
 @Component({
   selector: 'app-tax-filing',
@@ -18,8 +20,10 @@ export class TaxFilingComponent implements OnInit {
   public taxData?: TaxFilingDocument;
   public filingType?: Standard
   public status = 'create';
+  public modalRef?: BsModalRef;
 
-  constructor(public cdRef: ChangeDetectorRef) {}
+  constructor(public cdRef: ChangeDetectorRef,
+    private modalService: BsModalService,) {}
   ngOnInit(): void {
   }
 
@@ -65,17 +69,19 @@ export class TaxFilingComponent implements OnInit {
       vatMonth: this.taxVatMonth?.vatMonth,
       vatYear: this.taxVatMonth?.vatYear,
       type: this.taxVatMonth?.type,
-      saleAmount: this.taxComputation?.saleAmount,
+      saleAmount: Number(this.taxComputation?.saleAmount),
       taxAmount: this.taxComputation?.taxAmount,
       surcharge: this.taxComputation?.taxAddLateAmount.surcharge,
       penalty: this.taxComputation?.taxAddLateAmount.penalty,
       totalVat: this.taxComputation?.taxAddLateAmount.totalVat,
     });
     this.status = 'confirm';
-    console.log(this.taxData, this.status);
   }
 
    onClickNextToSubmit() {
+    if (this.filingType?.code === '2') {
+      this.taxComputationComponent.emitTaxAddLate();
+    }
     if (this.validFormAllChild()) {
       this.prepareDataToDocument();
     }
@@ -86,4 +92,12 @@ export class TaxFilingComponent implements OnInit {
     return this.vatMonthComponent.validVatMothForm() || 
             this.taxComputationComponent.validForm();
   }
+
+  public openModal(): void {
+      const initData = { title: 'Success', content:JSON.stringify(this.taxData) };
+      this.modalRef = this.modalService?.show(PopupComponent,
+          { ignoreBackdropClick: true, initialState: initData }
+      );
+  }
+  
 }

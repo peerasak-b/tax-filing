@@ -23,10 +23,11 @@ export class FilingTypeComponent  implements OnInit {
     return this.taxFilingTypeForm.controls;
 }
   ngOnInit(): void {
-      this.createTaxFilingForm();
-      if(this.status == 'confirm') {
-        this.setTaxDataToDocument()
-      }
+    this.createTaxFilingForm();
+    this.onSelect();
+    if(this.status == 'confirm') {
+      this.setTaxDataToDocument()
+    }
   }
   ngOnChanges(): void{
     if(this.status == 'confirm') {

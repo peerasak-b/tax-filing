@@ -1,12 +1,26 @@
+
 <div class="container">
-  <ul class="tax-stepper">
-    <li class="node-first-active">
-      <div class="tax-step-number">1</div>
-      <div class="tax-step-detail">Input Detail</div>
-    </li>
-    <li class="tax-node">
-      <div class="tax-step-number">2</div>
-      <div class="tax-step-detail">Review & Confirm</div>
-    </li>
-  </ul>
+  <div class="row justify-content-center">
+    <div class="col-6">
+      <div class="step-indicator">
+        <div class="col-4">
+          <div class="step">
+            <div class="step-number-active"
+                [ngClass]="{'step-number-actived': status==='confirm'}">1</div>
+            <div class="step-label">Input Detail</div>
+          </div>
+        </div>
+        <div class="col-4 line"
+        [ngClass]="{'line-active': status==='confirm'}"></div>
+        <div class="col-4">
+          <div class="step">
+            <div class="step-number-non-active"
+              [ngClass]="{'step-number-active-re': status==='confirm'}">2</div>
+            <div class="step-label-non-active"
+                [ngClass]="{'step-label-active': status==='confirm'}">Review & Confirm</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-stepper',
@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./stepper.component.scss']
 })
 export class StepperComponent {
-
+  @Input() status = 'create';
 }

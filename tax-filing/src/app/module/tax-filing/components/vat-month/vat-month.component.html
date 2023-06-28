@@ -46,9 +46,9 @@
 
 <div class="row" *ngIf="status === 'confirm'">
     <div class="col-2">
-        <label>Vat Month</label>
+        <label class="label-confirm">Vat Month</label>
     </div>
-    <div class="col-2">
-        <span>{{taxDataDocument?.vatMonth?.name}} {{taxDataDocument?.vatYear?.name}}</span>
+    <div class="col-10">
+        <span>{{taxDataDocument?.vatMonth?.name}} {{taxDataDocument?.vatYear?.name}} {{taxDataDocument?.type?.name}}</span>
     </div>
 </div>

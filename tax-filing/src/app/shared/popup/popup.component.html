@@ -1,0 +1,19 @@
+
+<div class="box-dialog" >
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          {{ title }}
+        </h5>
+      </div>
+
+      <div class="modal-body">
+        <pre>{{ content | json }}</pre>
+      </div>
+      <div class="modal-footer">
+        <button class="tax-confirm-button" (click)="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

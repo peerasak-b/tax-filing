@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { formatNumber, registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/th';
 import { TaxAdditionalLateFilingComponent } from '../tax-additional-late-filing/tax-additional-late-filing.component';
-import { Standard, TaxAddLateDocument, TaxComputationDocument } from '../../models/tax-filing.model';
+import { Standard, TaxAddLateDocument, TaxComputationDocument, TaxFilingDocument } from '../../models/tax-filing.model';
 registerLocaleData(localeFr, 'th');
 
 @Component({
@@ -14,14 +14,16 @@ registerLocaleData(localeFr, 'th');
 export class TaxComputationComponent implements OnInit {
   @Input() filingType?: Standard;
   @Input() status= "create";
+  @Input() taxData?: TaxFilingDocument;
   @Output() taxComputationEvent = new EventEmitter<TaxComputationDocument>();
-  @ViewChild(TaxAdditionalLateFilingComponent) taxAddLateFilingComponent: TaxAdditionalLateFilingComponent = new TaxAdditionalLateFilingComponent();
+  @ViewChild(TaxAdditionalLateFilingComponent) taxAddLateFilingComponent: TaxAdditionalLateFilingComponent = new TaxAdditionalLateFilingComponent(this.cdRef);
   public valueDisplay = 0.00;
   public taxForm: FormGroup = new FormGroup({});
   public saleAmount = 0;
   public taxAmount = 0;
   public taxAddLate?: TaxAddLateDocument;
   public taxComputation?: TaxComputationDocument;
+  public taxDataDocument?: TaxFilingDocument;
   get formGroup() {
     return this.taxForm.controls;
   } 
@@ -35,6 +37,9 @@ export class TaxComputationComponent implements OnInit {
   }
 
   ngOnChanges(): void {
+    if(this.status == 'confirm') {
+      this.setTaxDataToDocument();
+    }
   }
 
   ngAfterContentChecked() {
@@ -100,20 +105,47 @@ export class TaxComputationComponent implements OnInit {
       penalty: taxAddLate.penalty,
       totalVat: taxAddLate.totalVat
     });
-
   }
 
   emitComputation() {
-    this.taxComputation = new TaxComputationDocument({
-      saleAmount:  this.saleAmount,
-      taxAmount: this.taxAmount,
-      taxAddLateAmount: this.taxAddLate === undefined ? new TaxAddLateDocument({
-        surcharge: 0,
-        penalty: 0,
-        totalVat: 0
-      }) : this.taxAddLate
-    });
+    if (this.filingType?.code === '1') {
+      this.taxComputation = new TaxComputationDocument({
+        saleAmount:  this.saleAmount,
+        taxAmount: this.taxAmount,
+        taxAddLateAmount: new TaxAddLateDocument({
+          surcharge: 0,
+          penalty: 0,
+          totalVat: 0
+        })
+      });
+    } else {
+      this.taxComputation = new TaxComputationDocument({
+        saleAmount:  this.saleAmount,
+        taxAmount: this.taxAmount,
+        taxAddLateAmount: new TaxAddLateDocument({
+          surcharge: this.taxAddLate?.surcharge === undefined ? 0 : this.taxAddLate.surcharge,
+          penalty:  this.taxAddLate?.penalty === undefined ? 0 : this.taxAddLate.penalty,
+          totalVat:  this.taxAddLate?.totalVat === undefined ? 0 : this.taxAddLate.totalVat
+        })
+      });
+    }
     this.taxComputationEvent.emit(this.taxComputation);
+  }
+
+  setTaxDataToDocument() {
+    this.taxDataDocument = new TaxFilingDocument({
+      saleAmount: this.taxData?.saleAmount,
+      taxAmount: this.taxData?.taxAmount,
+      surcharge: this.taxData?.surcharge,
+      penalty:  this.taxData?.penalty,
+      totalVat:  this.taxData?.totalVat
+      
+    });
+  }
+
+  public emitTaxAddLate() {
+    this.taxAddLateFilingComponent.initAddLateFilingForm();
+    this.emitComputation();
   }
 }
 
