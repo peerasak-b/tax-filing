@@ -1,0 +1,34 @@
+<app-navbar></app-navbar>
+<h1 class="tax-header">Submit Tax Filing</h1>
+<app-stepper [status]="status"></app-stepper>
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <app-filing-type (filingTypeEvent)="setFilingType($event)" [status]="status" [taxData]="taxData"></app-filing-type>
+            <app-vat-month [filingType]="filingType" (vatMonthEvent)="setVatMonth($event)"  [status]="status" [taxData]="taxData"></app-vat-month>
+            <app-tax-computation [filingType]="filingType" (taxComputationEvent)="setTaxConputation($event)"  [status]="status" [taxData]="taxData"></app-tax-computation>
+            <br />
+            <span class="tax-under-header" *ngIf="status === 'confirm'">Declaration</span>
+            <hr *ngIf="status === 'confirm'">
+            <div class="row" *ngIf="status === 'confirm'">
+                <div class="col-12">
+                    <label>I here by certify that information given above are true and coolect and agree to be bound by such information.</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<footer>
+<div class="container">
+    <div class="row">
+        <div class="col-12" *ngIf="status === 'create'">
+            <button class="tax-back-button">Back</button>
+            <button class="tax-submit-button" (click)="onClickNextToSubmit()">Next</button>
+        </div>
+        <div class="col-12 text-center" *ngIf="status === 'confirm'">
+            <button class="tax-confirm-button" (click)="openModal()">Confirm and Submit</button>
+        </div>
+    </div>
+</div>
+</footer>

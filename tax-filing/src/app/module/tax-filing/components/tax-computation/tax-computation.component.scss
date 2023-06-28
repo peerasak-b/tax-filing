@@ -1,0 +1,52 @@
+@import "../../../../style/colors.scss";
+.tax-under-header {
+    font-size: 24px;
+    font-weight: bold;
+}
+input {
+    background: "text" no-repeat;
+    background-position: calc(100% - 0.75rem) center !important;
+    -moz-appearance:none !important;
+    -webkit-appearance: none !important; 
+    appearance: none !important;
+    padding-right: 50px !important;
+}
+.btn-exchange-rate {
+    border: none;
+    background: none;
+}
+
+.tax-under {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.input-number{
+    text-align: right;
+    border: solid;
+}
+
+
+.currency-position {
+  position: relative;
+  top: -50%;
+  left: 83%;
+  font-weight: bold;
+}
+
+.field-invalid:valid {
+    border: 3px solid $secondary;
+    border-radius: 6px;
+}
+
+.label-confirm {
+    font-weight: bold;
+}
+
+.total-confirm {
+    font-size: 24px;
+}
+
+.text-currency {
+    text-align: right;
+}

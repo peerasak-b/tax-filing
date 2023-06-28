@@ -1,0 +1,36 @@
+.modal-body {
+    font-size: 16px;
+    text-align: center;
+    font-weight: 300;
+    overflow-y: auto;
+    background-color: #FFFFFF;
+    border-radius: 0px 0px 8px 8px;
+    padding-block: 10px;
+}
+
+.modal-footer {
+    border-top: none !important;
+    justify-content: center;
+}
+
+.box-dialog {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    animation: fadein 0.3s;
+}
+.modal-titles{
+    margin-left: 20px;
+}
+
+.tax-confirm-button {
+    border-radius: 35px;
+    width: 240px;
+    height: 50px;
+    margin-left: 10px;
+    margin-bottom: 50px;
+    background: #000000;
+    color: #ffffff;
+    font-size: 18px;
+}

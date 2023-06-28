@@ -1,0 +1,32 @@
+.input-number{
+    text-align: right;
+    border: solid #d0d0d0;
+}
+
+input {
+    background: "text" no-repeat;
+    background-position: calc(100% - 0.75rem) center !important;
+    -moz-appearance:none !important;
+    -webkit-appearance: none !important; 
+    appearance: none !important;
+    padding-right: 43px !important;
+}
+
+.currency-position {
+    position: relative;
+    top: -50%;
+    left: 84%;
+    font-weight: bold;
+}
+
+.text-currency {
+    text-align: right;
+}
+
+.label-confirm {
+    font-weight: bold;
+}
+
+.total-confirm {
+    font-size: 24px;
+}

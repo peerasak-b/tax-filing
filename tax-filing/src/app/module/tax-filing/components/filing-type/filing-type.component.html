@@ -1,0 +1,30 @@
+<span class="tax-under-header"  *ngIf="status === 'create'">1. Tax Filing Detail</span>
+<span class="tax-under-header"  *ngIf="status === 'confirm'">Tax Filing Detail</span>
+<hr>
+<div class="row" *ngIf="status === 'create'">
+    <div class="col-12">
+        <label>Type of filing <span class="text-danger">*</span></label>
+    </div>
+</div>
+<div class="row" *ngIf="status === 'create'">
+    <div class="col-12">
+        <form [formGroup]="taxFilingTypeForm">
+            <div class="form-check  form-check-inline" *ngFor="let type of taxFilingType">
+                <input class="form-check-input" type="radio" formControlName="taxFilingType"
+                    id="flexRadioDefault1" value={{type.code}} (change)="onSelect()">
+                <label class="form-check-label" for="flexRadioDefault1">
+                    {{type.name}}  <fa-icon [icon]="icon" title="{{type.name}}"></fa-icon>
+                </label>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="row" *ngIf="status === 'confirm'">
+    <div class="col-2">
+        <span class="label-confirm">Type of Filing</span>
+    </div>
+    <div class="col-2">
+        <span>{{taxDataDocument?.filingType?.name}}</span>
+    </div>
+</div>
+<br />

@@ -1,0 +1,65 @@
+<br />
+<div class="row">
+    <div class="col-12">
+        <span class="label-confirm">In case of late filong and payment, or additional filing</span>
+    </div>
+</div>
+<br />
+<form [formGroup]="taxAdditionalForm">
+    <div class="row">
+        <div class="col-9" *ngIf="status === 'create'">
+            <label>3. Surcharge <fa-icon [icon]="icon" title=""></fa-icon></label>
+        </div>
+        <div class="col-7 label-confirm" *ngIf="status === 'confirm'" >
+            <label>Surcharge</label>
+        </div>
+        <div class="col-3" *ngIf="status === 'create'">
+            <input type="text" class="form-control input-number" formControlName="surcharge" [ngModel]="surcharge | number:'1.2-2'">
+            <span class="currency-position"> THB</span>
+        </div>
+        <div class="col-3  text-currency" *ngIf="status === 'confirm'">
+            <span>{{taxDataDocument?.surcharge?.toString()  | number:'1.2-2'}}</span>
+        </div>
+        <div class="col-2"  *ngIf="status === 'confirm'">
+            <span class="label-confirm total-confirm"> THB</span>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-9"  *ngIf="status === 'create'">
+            <label>4. Penalty <fa-icon [icon]="icon" title=""></fa-icon></label>
+        </div>
+        <div class="col-7"  *ngIf="status === 'confirm'">
+            <label class="label-confirm">Penalty</label>
+        </div>
+        <div class="col-3" *ngIf="status === 'create'">
+            <input type="text" class="form-control input-number" formControlName="penalty" [ngModel]="penalty | number:'1.2-2'">
+            <span class="currency-position"> THB</span>
+        </div>
+        <div class="col-3  text-currency" *ngIf="status === 'confirm'">
+            <span>{{taxDataDocument?.penalty?.toString()  | number:'1.2-2'}}</span>
+        </div>
+        <div class="col-2"  *ngIf="status === 'confirm'">
+            <span class="label-confirm total-confirm"> THB</span>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-9" *ngIf="status === 'create'">
+            <label>5. Total amount of VAT, surcharge, and penalty to be remitted (2.+3.+4.)</label>
+        </div>
+        <div class="col-7" *ngIf="status === 'confirm'">
+            <label class="label-confirm">Total amount of VAT, surcharge, and penalty to be remitted (2.+3.+4.)</label>
+        </div>
+        <div class="col-3" *ngIf="status === 'create'">
+            <input type="text" class="form-control input-number" formControlName="totalVat" (ngModelChange)="onChangeValue()" [ngModel]="totalVat | number:'1.2-2'">
+            <span class="currency-position"> THB</span>
+        </div>
+        <div class="col-3  text-currency" *ngIf="status === 'confirm'">
+            <span>{{taxDataDocument?.totalVat?.toString()  | number:'1.2-2'}}</span>
+        </div>
+        <div class="col-2"  *ngIf="status === 'confirm'">
+            <span class="label-confirm total-confirm"> THB</span>
+        </div>
+    </div>
+</form>
