@@ -51,8 +51,8 @@ export class TaxComputationComponent implements OnInit {
   
   createTaxFilingForm() {
       this.taxForm = new FormGroup({
-        saleAmount: new FormControl(0,[Validators.required, Validators.pattern("^[0-9]*$")]),
-        taxAmount: new FormControl(0,[Validators.required, Validators.pattern("^[0-9]*$")]),
+        saleAmount: new FormControl(0,[Validators.required, Validators.pattern("^[0-9]*$"), Validators.min(1)]),
+        taxAmount: new FormControl(0,[Validators.required, Validators.pattern("^[0-9]*$"), Validators.min(0)]),
     });
   }
 
@@ -61,11 +61,19 @@ export class TaxComputationComponent implements OnInit {
   }
 
   validForm() {
+    let checked = true
       this.setValidation([
           'saleAmount',
           'taxAmount',
       ]);
-      return this.taxForm.valid;
+      if (this.taxForm.valid) {
+        
+        checked = false;
+      }
+      if (!this.formGroup['saleAmount'].value || !this.formGroup['taxAmount'].value){
+        checked = false;
+      }
+      return checked;
   }
 
   setValidation(formControlsNames: string[]) {
@@ -86,6 +94,7 @@ export class TaxComputationComponent implements OnInit {
 
   onInputValue(event: any) {
     const value = this.filterNonNumeric(event.target.value);
+    this.validForm();
     event.target.value = value;
   }
 

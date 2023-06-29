@@ -50,3 +50,11 @@ input {
 .text-currency {
     text-align: right;
 }
+
+.text-alert-invalid {
+    color: red;
+    font-size: 12px;
+    position: relative;
+    top: -15%;
+    left: 50%;
+}

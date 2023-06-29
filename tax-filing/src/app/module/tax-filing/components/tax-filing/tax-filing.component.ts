@@ -83,13 +83,15 @@ export class TaxFilingComponent implements OnInit {
       this.taxComputationComponent.emitTaxAddLate();
     }
     if (this.validFormAllChild()) {
+      console.log('test');
+      
       this.prepareDataToDocument();
     }
   }
 
   public validFormAllChild(): boolean{
     this.vatMonthComponent.vatMonthForm.markAllAsTouched();
-    return this.vatMonthComponent.validVatMothForm() || 
+    return this.vatMonthComponent.validVatMothForm() && 
             this.taxComputationComponent.validForm();
   }
 

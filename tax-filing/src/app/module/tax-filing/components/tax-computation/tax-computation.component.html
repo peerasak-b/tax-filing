@@ -23,7 +23,7 @@
         <div class="col-7"  *ngIf="status === 'confirm'">
             <span class="label-confirm">Total value of taxable electronic service exclusive of VAT</span>
         </div>
-            <div class="col-3"  *ngIf="status === 'create'">
+            <div class="col-3 text-right"  *ngIf="status === 'create'">
                 <input type="text" 
                 #myInput
                 class="form-control input-number" 
@@ -32,8 +32,9 @@
                 (change)="onChangeValue()" 
                 (click)="onClick($event)"
                 [ngModel]="saleAmount | number:'1.2-2'"
-                [ngClass]="{'field-invalid': formGroup['saleAmount'].errors?.['required']}">
+                [ngClass]="{'field-invalid': formGroup['saleAmount'].errors?.['required'] || !formGroup['saleAmount'].value}">
                 <span class="currency-position"> THB</span>
+                <span class="text-alert-invalid" *ngIf="!formGroup['saleAmount'].value">Value more than 0</span>
             </div>
             <div class="col-3   text-currency" *ngIf="status === 'confirm'">
                 <span>{{taxDataDocument?.saleAmount?.toString()  | number:'1.2-2'}}</span>
@@ -58,8 +59,9 @@
             (change)="onChangeValue()" 
             (click)="onClick($event)"
             [ngModel]="taxAmount | number:'1.2-2'"
-            [ngClass]="{'field-invalid': formGroup['taxAmount'].errors?.['required']}">
+            [ngClass]="{'field-invalid': formGroup['taxAmount'].errors?.['required'] || formGroup['taxAmount'].errors?.['min']}">
             <span class="currency-position"> THB</span>
+            <span class="text-alert-invalid" *ngIf="!formGroup['taxAmount'].value">Value more than 0</span>
         </div>
         <div class="col-3   text-currency" *ngIf="status === 'confirm'">
             <span>{{taxDataDocument?.taxAmount?.toString()  | number:'1.2-2'}}</span>
